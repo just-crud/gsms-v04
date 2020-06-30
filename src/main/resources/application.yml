@@ -1,0 +1,30 @@
+#Tomcat
+server:
+  port: 8076 #端口号
+
+#DB configuration mysql配置信息
+spring:
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver #mysql驱动
+    url: jdbc:mysql://127.0.0.1:3306/gsms?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC
+    username: root #mysql用户名
+    password: root #mysql密码#Tomcat
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.yzg.gsms.entity
+  configuration:
+    map-underscore-to-camel-case: true
+  configuration-properties: { dbSchema: gsms. }
+
+
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+  returnPageInfo: check
+
+logging:
+  level:
+    com.yzg.gsms.dao: debug

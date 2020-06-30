@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yzg.gsms.dao.GoodsMapper">
+    <sql id="tableName">
+      ${dbSchema}goods
+    </sql>
+
+    <insert id="insert" parameterType="Goods">
+        INSERT INTO
+        <include refid="tableName"/>
+        (id,name,market_id,price,quantity,is_enabled,sequence)
+        VALUES(#{id},#{name},#{marketId},#{price},#{quantity},#{isEnabled},#{sequence})
+    </insert>
+
+    <select id="get" parameterType="String" resultType="Goods">
+        SELECT *
+        FROM
+        <include refid="tableName"/>
+        WHERE id = #{id}
+    </select>
+
+    <update id="update" parameterType="Goods">
+        UPDATE
+        <include refid="tableName"/>
+        SET name = #{name},market_id = #{marketId},price = #{price},
+        quantity = #{quantity},is_enabled = #{isEnabled},sequence = #{sequence}
+        WHERE id = #{id}
+    </update>
+
+    <update id="logicalDelete" parameterType="Goods">
+        UPDATE
+        <include refid="tableName"/>
+        SET is_enabled = 0
+        WHERE id = #{id}
+    </update>
+
+    <delete id="delete" parameterType="String">
+        DELETE FROM
+        <include refid="tableName"/>
+        WHERE id = #{id}
+    </delete>
+</mapper>

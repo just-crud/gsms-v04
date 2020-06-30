@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yzg.gsms.dao.MarketMapper">
+    <sql id="tableName">
+      ${dbSchema}market
+    </sql>
+
+    <insert id="insert" parameterType="Market">
+        INSERT INTO
+        <include refid="tableName"/>
+        (id,name,address,owner,gaffer,is_enabled,
+        creator,create_time,last_modifier,last_modifier_time,
+        sequence)
+        VALUES(#{id},#{name},#{address},#{owner},#{gaffer},#{isEnabled},
+        #{creator},#{createTime},#{lastModifier},#{lastModifierTime},
+        #{sequence})
+    </insert>
+
+    <select id="get" parameterType="String" resultType="Market">
+        SELECT *
+        FROM
+        <include refid="tableName"/>
+        WHERE id = #{id}
+    </select>
+
+    <update id="update" parameterType="Market">
+        UPDATE
+        <include refid="tableName"/>
+        SET name = #{name},address = #{address},owner = #{owner},gaffer = #{gaffer},is_enabled = #{isEnabled},
+        last_modifier = #{lastModifier},last_modifier_time = #{lastModifierTime},
+        sequence = #{sequence}
+        WHERE id = #{id}
+    </update>
+
+    <update id="logicalDelete" parameterType="Market">
+        UPDATE
+        <include refid="tableName"/>
+        SET is_enabled = 0,
+        last_modifier = #{lastModifier},last_modifier_time = #{lastModifierTime}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="delete" parameterType="String">
+        DELETE FROM
+        <include refid="tableName"/>
+        WHERE id = #{id}
+    </delete>
+</mapper>

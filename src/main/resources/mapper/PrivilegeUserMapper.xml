@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yzg.gsms.dao.PrivilegeUserMapper">
+    <sql id="tableName">
+      ${dbSchema}privilege_user
+    </sql>
+
+    <insert id="insert" parameterType="PrivilegeUser">
+        INSERT INTO
+        <include refid="tableName"/>
+        (id,name,password,phone,is_enabled,
+        creator,create_time,last_modifier,last_modifier_time,
+        sequence)
+        VALUES(#{id},#{name},#{password},#{phone},#{isEnabled},
+        #{creator},#{createTime},#{lastModifier},#{lastModifierTime},
+        #{sequence})
+    </insert>
+
+    <select id="get" parameterType="String" resultType="PrivilegeUser">
+        SELECT *
+        FROM
+        <include refid="tableName"/>
+        WHERE id = #{id}
+    </select>
+
+    <update id="update" parameterType="PrivilegeUser">
+        UPDATE
+        <include refid="tableName"/>
+        SET name = #{name},password = #{password},phone = #{phone},is_enabled = #{isEnabled},
+        last_modifier = #{lastModifier},last_modifier_time = #{lastModifierTime},
+        sequence = #{sequence}
+        WHERE id = #{id}
+    </update>
+
+    <update id="logicalDelete" parameterType="PrivilegeUser">
+        UPDATE
+        <include refid="tableName"/>
+        SET is_enabled = 0,
+        last_modifier = #{lastModifier},last_modifier_time = #{lastModifierTime}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="delete" parameterType="String">
+        DELETE FROM
+        <include refid="tableName"/>
+        WHERE id = #{id}
+    </delete>
+</mapper>
